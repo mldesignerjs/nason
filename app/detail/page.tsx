@@ -1,12 +1,7 @@
 'use client'
 import { umbrellas } from '@/constants'
 import { useSearchParams } from 'next/navigation'
-import type { Metadata } from 'next'
 import { useEffect, useState } from 'react'
-
-export const metadata: Metadata = {
-    title: 'Page',
-}
 
 export default function DetailEngrave() {
     const searchParam = useSearchParams()
