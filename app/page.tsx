@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -12,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck, faDownload } from '@fortawesome/free-solid-svg-icons'
 
 import { engraveFonts, kindHandle, umbrellas } from '@/constants'
-import { EditContent } from './EditContent'
+import { EditContent } from '../components/shared/EditContent'
 import { handleO, umbrellaO } from '@/types'
 import Modal from '@/components/shared/Modal'
 
