@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import Link from 'next/link'
 
 import { useQueryState } from 'nuqs'
@@ -27,7 +27,7 @@ import {
 import { Slider } from '@/components/ui/slider'
 import { slugVn } from '@/lib/utils'
 
-export default function Home() {
+function HomeSearchParam() {
     const searchParam = useSearchParams()
     const lineP: string = searchParam.get('line') || '1'
 
@@ -147,36 +147,28 @@ export default function Home() {
 
     function handleDownLoadImg(
         id: number,
-        type: string,
-        handle: string,
-        line: string,
-        text1: string,
-        fz1: string,
-        spacing1: string,
-        text2: string,
-        fz2: string,
-        spacing2: string,
-        dis: string,
+        tp: string,
+        hd: string,
+        l: string,
+        t1: string,
+        f1: string,
+        sp1: string,
+        t2: string,
+        f2: string,
+        sp2: string,
+        d: string,
     ) {
         const element: any = document.getElementById(
-            `imgWithEngraved-${type}-${handle}-${slugVn(
-                text1,
-            )}-${fz1}-${spacing1}${
-                line === '2'
-                    ? `-${line}-${slugVn(text2)}-${fz2}-${spacing2}-${dis}`
-                    : ''
+            `imgWithEngraved-${tp}-${hd}-${slugVn(t1)}-${f1}-${sp1}${
+                l === '2' ? `-${l}-${slugVn(t2)}-${f2}-${sp2}-${d}` : ''
             }-${id}`,
         )
         toPng(element)
             .then(function (dataUrl) {
                 download(
                     dataUrl,
-                    `${type}-${handle}-${slugVn(text1)}-${fz1}-${spacing1}${
-                        line === '2'
-                            ? `-${line}-${slugVn(
-                                  text2,
-                              )}-${fz2}-${spacing2}-${dis}`
-                            : ''
+                    `${tp}-${hd}-${slugVn(t1)}-${f1}-${sp1}${
+                        l === '2' ? `-${l}-${slugVn(t2)}-${f2}-${sp2}-${d}` : ''
                     }-${id}.png`,
                 )
             })
@@ -466,5 +458,13 @@ export default function Home() {
                 ))}
             </div>
         </div>
+    )
+}
+
+export default function Home() {
+    return (
+        <Suspense>
+            <HomeSearchParam />
+        </Suspense>
     )
 }
