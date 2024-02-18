@@ -1,9 +1,9 @@
 'use client'
 import { umbrellas } from '@/constants'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 
-export default function DetailEngrave() {
+function SearchParam() {
     const searchParam = useSearchParams()
     const kindUmbrella: string = searchParam.get('type') || 'g30'
     const [umbrellaPage, setUmbrellaPage] = useState<string>('')
@@ -14,10 +14,14 @@ export default function DetailEngrave() {
             return umbrella.sku === kindUmbrella
         })
     }, [kindUmbrella])
-
+    return <div className="mt-8">{umbrellaPage}</div>
+}
+export default function DetailEngrave() {
     return (
         <div className="container mx-auto py-10">
-            <div className="mt-8">{umbrellaPage}</div>
+            <Suspense>
+                <SearchParam />
+            </Suspense>
         </div>
     )
 }
