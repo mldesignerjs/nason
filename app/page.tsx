@@ -1,113 +1,451 @@
-import Image from "next/image";
+'use client'
+
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+
+import { useQueryState } from 'nuqs'
+import { useSearchParams } from 'next/navigation'
+const download = require('downloadjs')
+import { toPng } from 'html-to-image'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleCheck, faDownload } from '@fortawesome/free-solid-svg-icons'
+
+import { engraveFonts, kindHandle, umbrellas } from '@/constants'
+import { EditContent } from './EditContent'
+import { handleO, umbrellaO } from '@/types'
+import Modal from '@/components/shared/Modal'
+
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select'
+import { Slider } from '@/components/ui/slider'
+import { ShowDialogImage } from '@/components/shared/ShowDialogImage'
+import Image from 'next/image'
+import { slugVn } from '@/lib/utils'
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    const searchParam = useSearchParams()
+    const lineP: string = searchParam.get('line') || '1'
+
+    const nameP: string = searchParam.get('name') || 'Tên Của Bạn'
+    const sizeP: string = searchParam.get('size') || '22'
+    const spacingP: string = searchParam.get('spacing') || '0'
+
+    const nameP2: string = searchParam.get('name2') || '0888.888.888'
+    const sizeP2: string = searchParam.get('size2') || '22'
+    const spacingP2: string = searchParam.get('spacing2') || '0'
+
+    const distanceP: string = searchParam.get('dis') || '0'
+
+    const [type, setType] = useQueryState('type')
+    const [handleP, setHandleP] = useQueryState('handle')
+    const [line, setLine] = useQueryState('line')
+
+    const [name, setName] = useQueryState('name')
+    const [size, setSize] = useQueryState('size')
+    const [spacing, setSpacing] = useQueryState('spacing')
+
+    const [name2, setName2] = useQueryState('name2')
+    const [size2, setSize2] = useQueryState('size2')
+    const [spacing2, setSpacing2] = useQueryState('spacing2')
+
+    const [distance, setDistance] = useQueryState('dis')
+
+    const [currentUmbrella, setCurrentUmbrella] = useState<umbrellaO>(
+        umbrellas[0],
+    )
+    const [handle, setHandle] = useState<handleO>(umbrellas[0].handle[0])
+
+    useEffect(() => {
+        setType(currentUmbrella.sku)
+        setHandleP(handle.value)
+        setLine(lineP)
+        setName(nameP)
+        setSize(sizeP)
+        setSpacing(spacingP)
+        setName2(nameP2)
+        setSize2(sizeP2)
+        setSpacing2(spacingP2)
+        setDistance(distanceP)
+    }, [])
+
+    function handleChangeLineNumber(value: string) {
+        setLine(value)
+    }
+
+    function handleChangeLineHeight(value: number[]) {
+        setDistance(value[0].toString())
+    }
+
+    function handleChangeContent1(value: string) {
+        setName(value)
+    }
+
+    function handleChangeFontSize1(value: number[]) {
+        setSize(value[0].toString())
+    }
+
+    function handleChangeLetterSpacing1(value: number[]) {
+        setSpacing(value[0].toString())
+    }
+
+    function handleChangeContent2(value: string) {
+        setName2(value)
+    }
+
+    function handleChangeFontSize2(value: number[]) {
+        setSize2(value[0].toString())
+    }
+
+    function handleChangeLetterSpacing2(value: number[]) {
+        setSpacing2(value[0].toString())
+    }
+
+    function handleChangeUmbrella(value: string) {
+        const nextUmbrella: any = umbrellas.find(
+            (umbrella) => umbrella.id === value,
+        )
+        setCurrentUmbrella(nextUmbrella)
+        setHandle(nextUmbrella.handle[0])
+        setHandleP(nextUmbrella.handle[0].value)
+
+        setType(nextUmbrella.sku)
+    }
+
+    function handleChangeKindWood(value: string) {
+        const nextHandle: any = currentUmbrella?.handle.find(
+            (umbrella) => umbrella.value === value,
+        )
+        setHandle(nextHandle)
+        setHandleP(nextHandle.value)
+    }
+
+    function handleDownLoadImg(
+        id: number,
+        type: string,
+        handle: string,
+        line: string,
+        text1: string,
+        fz1: string,
+        spacing1: string,
+        text2: string,
+        fz2: string,
+        spacing2: string,
+        dis: string,
+    ) {
+        const element: any = document.getElementById(
+            `imgWithEngraved-${type}-${handle}-${slugVn(
+                text1,
+            )}-${fz1}-${spacing1}${
+                line === '2'
+                    ? `-${line}-${slugVn(text2)}-${fz2}-${spacing2}-${dis}`
+                    : ''
+            }-${id}`,
+        )
+        toPng(element)
+            .then(function (dataUrl) {
+                download(
+                    dataUrl,
+                    `${type}-${handle}-${slugVn(text1)}-${fz1}-${spacing1}${
+                        line === '2'
+                            ? `-${line}-${slugVn(
+                                  text2,
+                              )}-${fz2}-${spacing2}-${dis}`
+                            : ''
+                    }-${id}.png`,
+                )
+            })
+            .catch(function (error) {
+                console.error('oops, something went wrong!', error)
+            })
+    }
+
+    return (
+        <div className="lg:px-24 max-lg:px-4 lg:pt-20 max-lg:pt-20 container mx-auto">
+            <h2 className="text-center text-xl" style={engraveFonts[10].style}>
+                Hãy chọn font, kích cỡ chữ để khắc tên lên tay cầm ô dù
+            </h2>
+            <Modal>
+                <div className="">
+                    <p className="font-bold text-center ">Số dòng chữ:</p>
+                    <div className="flex items-center justify-center my-4">
+                        <label
+                            className="cursor-pointer mr-6"
+                            htmlFor="lineNumber1"
+                        >
+                            <input
+                                type="radio"
+                                className="peer sr-only"
+                                name="lineNumber"
+                                id="lineNumber1"
+                                value="1"
+                                checked={line === '1'}
+                                onChange={(e) =>
+                                    handleChangeLineNumber(e.target.value)
+                                }
+                            />
+                            <div className="w-24 max-w-xl rounded-md bg-white p-2 text-gray-300 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-main peer-checked:ring-main peer-checked:ring-offset-0">
+                                <div className="flex flex-col gap-1">
+                                    <div className="flex items-center justify-between">
+                                        <p className="text-sm font-semibold uppercase text-gray-500">
+                                            1 dòng
+                                        </p>
+                                        <FontAwesomeIcon
+                                            icon={faCircleCheck}
+                                            className="text-xl"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                        <label className="cursor-pointer" htmlFor="lineNumber2">
+                            <input
+                                type="radio"
+                                className="peer sr-only"
+                                name="lineNumber"
+                                id="lineNumber2"
+                                value="2"
+                                checked={line === '2'}
+                                onChange={(e) =>
+                                    handleChangeLineNumber(e.target.value)
+                                }
+                            />
+                            <div className="w-24 max-w-xl rounded-md bg-white p-2 text-gray-300 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-main peer-checked:ring-main peer-checked:ring-offset-0">
+                                <div className="flex flex-col gap-1">
+                                    <div className="flex items-center justify-between">
+                                        <p className="text-sm font-semibold uppercase text-gray-500">
+                                            2 dòng
+                                        </p>
+                                        <FontAwesomeIcon
+                                            icon={faCircleCheck}
+                                            className="text-xl"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    <div className="flex items-center border-t-gray-300 mb-6">
+                        <Select
+                            value={currentUmbrella.id}
+                            onValueChange={(value) =>
+                                handleChangeUmbrella(value)
+                            }
+                        >
+                            <SelectTrigger className="py-2 mr-4 rounded focus:ring-0">
+                                <SelectValue
+                                    defaultValue={currentUmbrella.id}
+                                />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel className="text-main font-bold">
+                                        Loại ô
+                                    </SelectLabel>
+                                    {umbrellas.map((umbrella) => (
+                                        <SelectItem
+                                            key={umbrella.id}
+                                            value={umbrella.id}
+                                            className="checked:bg-red-300"
+                                        >
+                                            {umbrella.name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                        <Select
+                            value={handle?.value}
+                            onValueChange={(value) =>
+                                handleChangeKindWood(value)
+                            }
+                        >
+                            <SelectTrigger className="py-2 rounded focus:ring-0">
+                                <SelectValue defaultValue={handle?.value} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel className="text-main font-bold">
+                                        Loại tay cầm
+                                    </SelectLabel>
+                                    {currentUmbrella.handle.map((handle) => (
+                                        <SelectItem
+                                            key={handle.id}
+                                            value={handle.value}
+                                        >
+                                            {
+                                                kindHandle.find(
+                                                    (wood) =>
+                                                        wood.value ===
+                                                        handle.value,
+                                                )?.name
+                                            }
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="border-t-gray-300 py-4 border-t">
+                        {line === '2' && (
+                            <p className="font-bold text-center">Dòng 1</p>
+                        )}
+                        <EditContent
+                            fontSize={size || sizeP}
+                            letterSpacing={spacing || spacingP}
+                            onChangeContent={handleChangeContent1}
+                            onChangeFontSize={handleChangeFontSize1}
+                            onChangeLetterSpacing={handleChangeLetterSpacing1}
+                        />
+                    </div>
+                    {line === '2' && (
+                        <>
+                            <div className="border-t-gray-300 py-4 border-t">
+                                <p className="font-bold text-center">Dòng 2</p>
+                                <EditContent
+                                    fontSize={size2 || sizeP2}
+                                    letterSpacing={spacing2 || spacingP2}
+                                    onChangeContent={handleChangeContent2}
+                                    onChangeFontSize={handleChangeFontSize2}
+                                    onChangeLetterSpacing={
+                                        handleChangeLetterSpacing2
+                                    }
+                                />
+                            </div>
+                            <div className="border-t-gray-300 border-t">
+                                <div className="py-2 relative">
+                                    <label
+                                        className="pr-6 block"
+                                        htmlFor="distance"
+                                    >
+                                        Khoảng cách 2 dòng:
+                                    </label>
+                                    <span className="font-bold text-main absolute left-1/2 -translate-x-1/2">
+                                        {distance}
+                                    </span>
+                                    <Slider
+                                        defaultValue={[
+                                            parseInt(distance || distanceP),
+                                        ]}
+                                        min={-20}
+                                        max={20}
+                                        name="distance"
+                                        step={1}
+                                        className="mt-8"
+                                        onValueChange={(value) =>
+                                            handleChangeLineHeight(value)
+                                        }
+                                    />
+                                </div>
+                            </div>
+                        </>
+                    )}
+                </div>
+            </Modal>
+            <div className="mt-6">
+                {engraveFonts.map((font, key) => (
+                    <div
+                        key={key}
+                        style={font.style}
+                        className="w-full overflow-hidden justify-center pb-6 relative"
+                    >
+                        <span className="max-sm:text-sm text-xl absolute max-sm:top-2 max-sm:left-2 top-4 left-4 z-10 flex max-sm:w-5 max-sm:h-5 w-10 h-10 rounded-full bg-main text-white justify-center items-center">
+                            {key + 1}
+                        </span>
+                        <span
+                            className="cursor-pointer md:text-md text-xs absolute max-sm:top-8 max-sm:left-2 top-16 left-4 z-10 flex max-sm:w-5 max-sm:h-5 w-10 h-10 rounded-full bg-main text-white justify-center items-center"
+                            onClick={() =>
+                                handleDownLoadImg(
+                                    key,
+                                    currentUmbrella.sku,
+                                    handle.value,
+                                    line || lineP,
+                                    name || nameP,
+                                    size || sizeP,
+                                    spacing || spacingP,
+                                    name2 || nameP2,
+                                    size2 || sizeP2,
+                                    spacing2 || spacingP2,
+                                    distance || distanceP,
+                                )
+                            }
+                        >
+                            <FontAwesomeIcon icon={faDownload} />
+                        </span>
+                        <div className="flex items-center w-full overflow-hidden text-center leading-normal">
+                            <Link
+                                target="_blank"
+                                href={{
+                                    pathname: `/detail/${currentUmbrella.sku}`,
+                                    query: {
+                                        font: key,
+                                        line: line || lineP,
+                                        name: name || nameP,
+                                        size: size || sizeP,
+                                        spacing: spacing || spacingP,
+                                        name2: name2 || nameP2,
+                                        size2: size2 || sizeP2,
+                                        spacing2: spacing2 || spacingP2,
+                                        dis: distance || distanceP,
+                                    },
+                                }}
+                            >
+                                <div
+                                    className="relative"
+                                    id={`imgWithEngraved-${type}-${
+                                        handle.value
+                                    }-${slugVn(
+                                        name || nameP,
+                                    )}-${size}-${spacing}${
+                                        line === '2'
+                                            ? `-${line}-${slugVn(
+                                                  name2 || nameP2,
+                                              )}-${size2}-${spacing2}-${distance}`
+                                            : ''
+                                    }-${key}`}
+                                >
+                                    <img
+                                        src={handle.urlImg}
+                                        alt="umbrella"
+                                        className="handle-image"
+                                    />
+                                    <div className="content">
+                                        <span
+                                            className={`engrave ${handle.value}`}
+                                            style={{
+                                                width: `${currentUmbrella.sizeHandle}cm`,
+                                                letterSpacing: `${spacing}px`,
+                                                fontSize: `${size}pt`,
+                                            }}
+                                        >
+                                            {name}
+                                        </span>
+                                        {line === '2' && (
+                                            <span
+                                                className={`engrave ${handle.value}`}
+                                                style={{
+                                                    width: `${currentUmbrella.sizeHandle}cm`,
+                                                    letterSpacing: `${spacing2}px`,
+                                                    fontSize: `${size2}pt`,
+                                                    marginTop: `${distance}px`,
+                                                }}
+                                            >
+                                                {name2}
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+    )
 }
