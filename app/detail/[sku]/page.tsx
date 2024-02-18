@@ -7,13 +7,6 @@ type Props = {
 
 export function generateMetadata({ params }: Props): Metadata {
     const sku = params.sku
-    // const [umbrellName, setUmbrellaName] = useState<string>('')
-    // useEffect(() => {
-    //     umbrellas.find((umbrella) => {
-    //         setUmbrellaName(umbrella.name)
-    //         return umbrella.sku === sku
-    //     })
-    // }, [])
     return {
         title: sku,
     }

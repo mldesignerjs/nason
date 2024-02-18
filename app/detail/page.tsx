@@ -18,7 +18,7 @@ export default function DetailEngrave() {
             setUmbrellaPage(umbrella.sku)
             return umbrella.sku === kindUmbrella
         })
-    }, [])
+    }, [kindUmbrella])
 
     return (
         <div className="container mx-auto py-10">

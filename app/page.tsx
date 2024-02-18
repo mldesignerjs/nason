@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -25,8 +26,6 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { Slider } from '@/components/ui/slider'
-import { ShowDialogImage } from '@/components/shared/ShowDialogImage'
-import Image from 'next/image'
 import { slugVn } from '@/lib/utils'
 
 export default function Home() {
