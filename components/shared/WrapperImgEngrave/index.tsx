@@ -5,6 +5,7 @@ import { faDownload } from '@fortawesome/free-solid-svg-icons'
 import { usePathname, useSearchParams } from 'next/navigation'
 
 import { slugVn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 
 export interface IWrapperImgEngraveProps {
     children: React.ReactNode
@@ -68,9 +69,9 @@ export function WrapperImgEngrave({
     return (
         <>
             <div className="relative w-full">
-                <button
+                <Button
                     type="button"
-                    className="cursor-pointer md:text-md text-xs absolute top-10 left-10 z-10 flex max-sm:w-5 max-sm:h-5 w-10 h-10 rounded-full bg-main text-white justify-center items-center"
+                    className="cursor-pointer absolute top-10 left-10 z-10  bg-main text-white"
                     onClick={() =>
                         handleDownLoadImg(
                             id,
@@ -88,7 +89,7 @@ export function WrapperImgEngrave({
                     }
                 >
                     <FontAwesomeIcon icon={faDownload} />
-                </button>
+                </Button>
                 <div
                     className="relative"
                     id={`image-${type}-${indexFont}-${slugVn(

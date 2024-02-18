@@ -8,7 +8,11 @@ import { useSearchParams } from 'next/navigation'
 const download = require('downloadjs')
 import { toPng } from 'html-to-image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleCheck, faDownload } from '@fortawesome/free-solid-svg-icons'
+import {
+    faCircleCheck,
+    faDownload,
+    faLink,
+} from '@fortawesome/free-solid-svg-icons'
 
 import { engraveFonts, kindHandle, umbrellas } from '@/constants'
 import { EditContent } from '../components/shared/EditContent'
@@ -29,6 +33,8 @@ import { slugVn } from '@/lib/utils'
 
 function HomeSearchParam() {
     const searchParam = useSearchParams()
+    const typeP: string = searchParam.get('type') || '0'
+    const handlePP: string = searchParam.get('handle') || '0'
     const lineP: string = searchParam.get('line') || '1'
 
     const nameP: string = searchParam.get('name') || 'Tên Của Bạn'
@@ -55,14 +61,9 @@ function HomeSearchParam() {
 
     const [distance, setDistance] = useQueryState('dis')
 
-    const [currentUmbrella, setCurrentUmbrella] = useState<umbrellaO>(
-        umbrellas[0],
-    )
-    const [handle, setHandle] = useState<handleO>(umbrellas[0].handle[0])
-
     useEffect(() => {
-        setType(currentUmbrella.sku)
-        setHandleP(handle.value)
+        setType(typeP)
+        setHandleP(handlePP)
         setLine(lineP)
         setName(nameP)
         setSize(sizeP)
@@ -72,9 +73,8 @@ function HomeSearchParam() {
         setSpacing2(spacingP2)
         setDistance(distanceP)
     }, [
-        currentUmbrella.sku,
         distanceP,
-        handle.value,
+        handlePP,
         lineP,
         nameP,
         nameP2,
@@ -92,7 +92,16 @@ function HomeSearchParam() {
         sizeP2,
         spacingP,
         spacingP2,
+        typeP,
     ])
+
+    const [currentUmbrella, setCurrentUmbrella] = useState<umbrellaO>(
+        umbrellas[parseInt(typeP)],
+    )
+
+    const [handle, setHandle] = useState<handleO>(
+        umbrellas[parseInt(typeP)].handle[parseInt(handlePP)],
+    )
 
     function handleChangeLineNumber(value: string) {
         setLine(value)
@@ -132,9 +141,9 @@ function HomeSearchParam() {
         )
         setCurrentUmbrella(nextUmbrella)
         setHandle(nextUmbrella.handle[0])
-        setHandleP(nextUmbrella.handle[0].value)
+        setHandleP(nextUmbrella.handle[0].id)
 
-        setType(nextUmbrella.sku)
+        setType(nextUmbrella.id)
     }
 
     function handleChangeKindWood(value: string) {
@@ -142,7 +151,7 @@ function HomeSearchParam() {
             (umbrella) => umbrella.value === value,
         )
         setHandle(nextHandle)
-        setHandleP(nextHandle.value)
+        setHandleP(nextHandle.id)
     }
 
     function handleDownLoadImg(
@@ -179,7 +188,7 @@ function HomeSearchParam() {
 
     return (
         <div className="lg:px-24 max-lg:px-4 lg:pt-20 max-lg:pt-20 container mx-auto">
-            <h2 className="text-center text-xl" style={engraveFonts[10].style}>
+            <h2 className="text-center text-xl font-sans">
                 Hãy chọn font, kích cỡ chữ để khắc tên lên tay cầm ô dù
             </h2>
             <Modal>
@@ -389,6 +398,27 @@ function HomeSearchParam() {
                         >
                             <FontAwesomeIcon icon={faDownload} />
                         </span>
+                        <Link
+                            target="_blank"
+                            href={{
+                                pathname: `/detail/${currentUmbrella.sku}`,
+                                query: {
+                                    font: key,
+                                    line: line || lineP,
+                                    name: name || nameP,
+                                    size: size || sizeP,
+                                    spacing: spacing || spacingP,
+                                    name2: name2 || nameP2,
+                                    size2: size2 || sizeP2,
+                                    spacing2: spacing2 || spacingP2,
+                                    dis: distance || distanceP,
+                                },
+                            }}
+                            className="font-sans absolute max-sm:bottom-8 max-sm:left-2 bottom-10 left-4 z-10 font-bold text-xs text-main"
+                            // style={engraveFonts[10].style}
+                        >
+                            <FontAwesomeIcon icon={faLink} /> Xem chi tiết
+                        </Link>
                         <div className="flex items-center w-full overflow-hidden text-center leading-normal">
                             <Link
                                 target="_blank"
