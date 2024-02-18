@@ -1,10 +1,10 @@
-import Image from 'next/image'
 const download = require('downloadjs')
 import { toPng } from 'html-to-image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDownload } from '@fortawesome/free-solid-svg-icons'
+import { usePathname, useSearchParams } from 'next/navigation'
+
 import { slugVn } from '@/lib/utils'
-import { useSearchParams } from 'next/navigation'
 
 export interface IWrapperImgEngraveProps {
     children: React.ReactNode
@@ -17,12 +17,11 @@ export function WrapperImgEngrave({
     children,
     id,
 }: IWrapperImgEngraveProps) {
+    const path = usePathname()
     const searchParam = useSearchParams()
-    const type: string = searchParam.get('type') || 'g30'
-    const handle: string = searchParam.get('handle') || 'cn'
+    const type: string = path.split('/')[2]
 
     const indexFont: string = searchParam.get('font') || '0'
-    const indexFontInt: number = parseInt(indexFont)
     const name: string = searchParam.get('name') || 'Tên Của Bạn'
     const size: string = searchParam.get('size') || '22'
     const spacing: string = searchParam.get('spacing') || '0'
@@ -35,36 +34,30 @@ export function WrapperImgEngrave({
     const line: string = searchParam.get('line') || '1'
 
     function handleDownLoadImg(
-        id: number,
-        type: string,
-        handle: string,
-        line: string,
-        text1: string,
-        fz1: string,
-        spacing1: string,
-        text2: string,
-        fz2: string,
-        spacing2: string,
-        dis: string,
+        index: number,
+        tp: string,
+        l: string,
+        f: string,
+        t1: string,
+        s1: string,
+        sp1: string,
+        t2: string,
+        s2: string,
+        sp2: string,
+        d: string,
     ) {
         const element: any = document.getElementById(
-            `image-${type}-${handle}-${slugVn(text1)}-${fz1}-${spacing1}${
-                line === '2'
-                    ? `-${line}-${slugVn(text2)}-${fz2}-${spacing2}-${dis}`
-                    : ''
-            }-${id}`,
+            `image-${tp}-${f}-${slugVn(t1)}-${s1}-${sp1}${
+                l === '2' ? `-${l}-${slugVn(t2)}-${s2}-${sp2}-${d}` : ''
+            }-${index}`,
         )
         toPng(element)
             .then(function (dataUrl) {
                 download(
                     dataUrl,
-                    `${type}-${handle}-${slugVn(text1)}-${fz1}-${spacing1}${
-                        line === '2'
-                            ? `-${line}-${slugVn(
-                                  text2,
-                              )}-${fz2}-${spacing2}-${dis}`
-                            : ''
-                    }-${id}.png`,
+                    `${tp}-${slugVn(t1)}-${s1}-${sp1}${
+                        l === '2' ? `-${l}-${slugVn(t2)}-${s2}-${sp2}-${d}` : ''
+                    }-${index}.png`,
                 )
             })
             .catch(function (error) {
@@ -75,14 +68,15 @@ export function WrapperImgEngrave({
     return (
         <>
             <div className="relative w-full">
-                <span
-                    className="cursor-pointer md:text-md text-xs absolute max-sm:top-8 max-sm:left-2 top-16 left-4 z-10 flex max-sm:w-5 max-sm:h-5 w-10 h-10 rounded-full bg-main text-white justify-center items-center"
+                <button
+                    type="button"
+                    className="cursor-pointer md:text-md text-xs absolute top-10 left-10 z-10 flex max-sm:w-5 max-sm:h-5 w-10 h-10 rounded-full bg-main text-white justify-center items-center"
                     onClick={() =>
                         handleDownLoadImg(
                             id,
                             type,
-                            handle,
                             line,
+                            indexFont,
                             name,
                             size,
                             spacing,
@@ -94,10 +88,10 @@ export function WrapperImgEngrave({
                     }
                 >
                     <FontAwesomeIcon icon={faDownload} />
-                </span>
+                </button>
                 <div
                     className="relative"
-                    id={`image-${type}-${handle}-${slugVn(
+                    id={`image-${type}-${indexFont}-${slugVn(
                         name,
                     )}-${size}-${spacing}${
                         line === '2'
@@ -107,14 +101,7 @@ export function WrapperImgEngrave({
                             : ''
                     }-${id}`}
                 >
-                    <Image
-                        src={src}
-                        width={1500}
-                        height={2000}
-                        alt={''}
-                        priority={true}
-                        className="w-full"
-                    />
+                    <img src={src} alt={''} className="w-full static" />
                     {children}
                 </div>
             </div>
