@@ -72,7 +72,28 @@ export default function Home() {
         setSize2(sizeP2)
         setSpacing2(spacingP2)
         setDistance(distanceP)
-    }, [])
+    }, [
+        currentUmbrella.sku,
+        distanceP,
+        handle.value,
+        lineP,
+        nameP,
+        nameP2,
+        setDistance,
+        setHandleP,
+        setLine,
+        setName,
+        setName2,
+        setSize,
+        setSize2,
+        setSpacing,
+        setSpacing2,
+        setType,
+        sizeP,
+        sizeP2,
+        spacingP,
+        spacingP2,
+    ])
 
     function handleChangeLineNumber(value: string) {
         setLine(value)
