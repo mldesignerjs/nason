@@ -156,26 +156,26 @@ function HomeSearchParam() {
 
     function handleDownLoadImg(
         id: number,
-        type: string,
-        handle: string,
-        line: string,
-        text1: string,
+        tp: string,
+        hd: string,
+        l: string,
+        t1: string,
         fz1: string,
-        spacing1: string,
-        text2: string,
+        sp1: string,
+        t2: string,
         fz2: string,
-        spacing2: string,
+        sp2: string,
         dis: string,
     ) {
-        const fileName = `${type}-${
-            handle
+        const fileName = `${tp}-${
+            hd
         }-${slugVn(
-            text1,
-        )}-${fz1}-${spacing!}${
-            line === '2'
-                ? `-${line}-${slugVn(
-                      text2,
-                  )}-${fz2}-${spacing2}-${dis}`
+            t1,
+        )}-${fz1}-${sp1}${
+            l === '2'
+                ? `-${l}-${slugVn(
+                      t2,
+                  )}-${fz2}-${sp2}-${dis}`
                 : ''
         }-${id}`
         const element: any = document.getElementById(`imgWithEngraved-${fileName}`)
