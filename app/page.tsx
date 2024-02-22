@@ -167,19 +167,21 @@ function HomeSearchParam() {
         spacing2: string,
         dis: string,
     ) {
-        const element: any = document.getElementById(`imgWithEngraved-${id}`)
+        const fileName = `${type}-${
+            handle
+        }-${slugVn(
+            text1,
+        )}-${fz1}-${spacing!}${
+            line === '2'
+                ? `-${line}-${slugVn(
+                      text2,
+                  )}-${fz2}-${spacing2}-${dis}`
+                : ''
+        }-${key}`
+        const element: any = document.getElementById(`imgWithEngraved-${fileName}`)
         toPng(element)
             .then(function (dataUrl) {
-                download(
-                    dataUrl,
-                    `${type}-${handle}-f${
-                        id + 1
-                    }-${text1}-s${fz1}-sp${spacing1}${
-                        line === '2'
-                            ? `-${text2}-s${fz2}-sp${spacing2}-dis${dis}`
-                            : ''
-                    }.png`,
-                )
+                download(dataUrl,`${fileName}.png`)
             })
             .catch(function (error) {
                 console.error('oops, something went wrong!', error)
