@@ -167,21 +167,15 @@ function HomeSearchParam() {
         sp2: string,
         dis: string,
     ) {
-        const fileName = `${tp}-${
-            hd
-        }-${slugVn(
-            t1,
-        )}-${fz1}-${sp1}${
-            l === '2'
-                ? `-${l}-${slugVn(
-                      t2,
-                  )}-${fz2}-${sp2}-${dis}`
-                : ''
+        const fileName = `${tp}-${hd}-${slugVn(t1)}-${fz1}-${sp1}${
+            l === '2' ? `-${l}-${slugVn(t2)}-${fz2}-${sp2}-${dis}` : ''
         }-${id}`
-        const element: any = document.getElementById(`imgWithEngraved-${fileName}`)
+        const element: any = document.getElementById(
+            `imgWithEngraved-${fileName}`,
+        )
         toPng(element)
             .then(function (dataUrl) {
-                download(dataUrl,`${fileName}.png`)
+                download(dataUrl, `${fileName}.png`)
             })
             .catch(function (error) {
                 console.error('oops, something went wrong!', error)
@@ -385,8 +379,8 @@ function HomeSearchParam() {
                             onClick={() =>
                                 handleDownLoadImg(
                                     key,
-                                    currentUmbrella.sku,
-                                    handle.value,
+                                    type || typeP,
+                                    handleP || handlePP,
                                     line || lineP,
                                     name || nameP,
                                     size || sizeP,
@@ -441,9 +435,7 @@ function HomeSearchParam() {
                             >
                                 <div
                                     className="relative"
-                                    id={`imgWithEngraved-${type}-${
-                                        handle.value
-                                    }-${slugVn(
+                                    id={`imgWithEngraved-${type}-${handleP}-${slugVn(
                                         name || nameP,
                                     )}-${size}-${spacing}${
                                         line === '2'
