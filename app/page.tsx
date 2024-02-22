@@ -156,29 +156,29 @@ function HomeSearchParam() {
 
     function handleDownLoadImg(
         id: number,
-        tp: string,
-        hd: string,
-        l: string,
-        t1: string,
-        f1: string,
-        sp1: string,
-        t2: string,
-        f2: string,
-        sp2: string,
-        d: string,
+        type: string,
+        handle: string,
+        line: string,
+        text1: string,
+        fz1: string,
+        spacing1: string,
+        text2: string,
+        fz2: string,
+        spacing2: string,
+        dis: string,
     ) {
-        const element: any = document.getElementById(
-            `imgWithEngraved-${tp}-${hd}-${slugVn(t1)}-${f1}-${sp1}${
-                l === '2' ? `-${l}-${slugVn(t2)}-${f2}-${sp2}-${d}` : ''
-            }-${id}`,
-        )
+        const element: any = document.getElementById(`imgWithEngraved-${id}`)
         toPng(element)
             .then(function (dataUrl) {
                 download(
                     dataUrl,
-                    `${tp}-${hd}-${slugVn(t1)}-${f1}-${sp1}${
-                        l === '2' ? `-${l}-${slugVn(t2)}-${f2}-${sp2}-${d}` : ''
-                    }-${id}.png`,
+                    `${type}-${handle}-f${
+                        id + 1
+                    }-${text1}-s${fz1}-sp${spacing1}${
+                        line === '2'
+                            ? `-${text2}-s${fz2}-sp${spacing2}-dis${dis}`
+                            : ''
+                    }.png`,
                 )
             })
             .catch(function (error) {
