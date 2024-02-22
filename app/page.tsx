@@ -177,7 +177,7 @@ function HomeSearchParam() {
                       text2,
                   )}-${fz2}-${spacing2}-${dis}`
                 : ''
-        }-${key}`
+        }-${id}`
         const element: any = document.getElementById(`imgWithEngraved-${fileName}`)
         toPng(element)
             .then(function (dataUrl) {
