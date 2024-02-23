@@ -88,7 +88,7 @@ export function WrapperImgEngrave({
                         )
                     }
                 >
-                    <FontAwesomeIcon icon={faDownload} />
+                    <FontAwesomeIcon icon={faDownload} /> Tải ảnh
                 </Button>
                 <div
                     className="relative"
