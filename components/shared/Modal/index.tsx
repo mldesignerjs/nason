@@ -15,9 +15,9 @@ function Modal({ children }: ModalProps) {
             <Sheet>
                 <SheetTrigger className="fixed top-[18%] right-0 z-30 w-[50px] h-[50px] bg-white rounded border text-xl">
                     <FontAwesomeIcon
-                        className="text-main text-xl"
+                        className="text-main font-bold text-xl"
                         icon={faPenToSquare}
-                    />
+                    /> Chỉnh sửa
                 </SheetTrigger>
                 <SheetContent className="bg-white flex flex-col gap-6 overflow-y-scroll">
                     <div className="flex items-center justify-center">
