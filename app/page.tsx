@@ -413,7 +413,7 @@ function HomeSearchParam() {
                             className="font-sans absolute max-sm:bottom-8 max-sm:left-2 bottom-10 left-4 z-10 font-bold text-xs text-main"
                             // style={engraveFonts[10].style}
                         >
-                            <FontAwesomeIcon icon={faLink} /> Xem chi tiết
+                            <FontAwesomeIcon icon={faLink} /> Xem chi tiết ảnh khắc
                         </Link>
                         <div className="flex items-center w-full overflow-hidden text-center leading-normal">
                             <Link
