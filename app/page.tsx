@@ -349,7 +349,7 @@ function HomeSearchParam() {
                                         defaultValue={[
                                             parseInt(distance || distanceP),
                                         ]}
-                                        min={-20}
+                                        min={-40}
                                         max={20}
                                         name="distance"
                                         step={1}
