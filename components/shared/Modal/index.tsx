@@ -13,7 +13,7 @@ function Modal({ children }: ModalProps) {
     return (
         <>
             <Sheet>
-                <SheetTrigger className="fixed top-[18%] right-0 z-30 flex items-center gap-4 bg-white rounded border text-xl text-main font-bold">
+                <SheetTrigger className="fixed top-[18%] right-0 z-30 flex items-center p-4 gap-4 bg-white rounded border text-xl text-main font-bold">
                     <FontAwesomeIcon
                         className=""
                         icon={faPenToSquare}
