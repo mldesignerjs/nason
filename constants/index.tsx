@@ -157,6 +157,7 @@ export const umbrellas: umbrellaA = [
         name: 'Ô tự động',
         sku: 'aoc',
         sizeHandle: 5.7,
+        link: 'https://odunason.com/cua-hang/o-du-tu-dong-thong-minh-nason-umbrella-fsau-8k/',
         handle: [
             {
                 value: 'nhua',
@@ -279,6 +280,7 @@ export const umbrellas: umbrellaA = [
         name: 'Chagoi',
         sizeHandle: 8,
         sku: 'chagoi',
+        link: 'https://odunason.com/cua-hang/du-tu-dong-gap-gon-nason-umbrella-chagoi-can-go-hiem-khac-ten-logo-dat-vang',
         handle: [
             {
                 value: 'tm',
@@ -294,6 +296,7 @@ export const umbrellas: umbrellaA = [
         name: 'G27',
         sku: 'g27',
         sizeHandle: 12,
+        link: 'https://odunason.com/cua-hang/o-thang-cao-cap-nason-umbrella-gentle-g27-tay-cam-go-27-inch/',
         handle: [
             {
                 value: 'cn',
@@ -406,6 +409,7 @@ export const umbrellas: umbrellaA = [
         name: 'G30',
         sku: 'g30',
         sizeHandle: 12,
+        link: 'https://odunason.com/cua-hang/o-thang-cao-cap-nason-umbrella-gentle-g30-tay-cam-go-30-inch/',
         handle: [
             {
                 value: 'cn',

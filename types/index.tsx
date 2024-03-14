@@ -24,6 +24,7 @@ export type umbrellaO = {
     sku: string
     sizeHandle: number
     handle: handleA
+    link: string
     detailPage: detailPage
 }
 export type umbrellaA = umbrellaO[]

@@ -9,6 +9,7 @@ const download = require('downloadjs')
 import { toPng } from 'html-to-image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
+    faCartShopping,
     faCircleCheck,
     faDownload,
     faLink,
@@ -174,10 +175,14 @@ function HomeSearchParam() {
             `imgWithEngraved-${fileName}`,
         )
         toPng(element)
-            .then(function (dataUrl) {
-                download(dataUrl, `${fileName}.png`)
+            .then(function (dataUrl: any) {
+                if (dataUrl) {
+                    download(dataUrl, `${fileName}.png`)
+                } else {
+                    console.error('oops, something went wrong!')
+                }
             })
-            .catch(function (error) {
+            .catch(function (error: any) {
                 console.error('oops, something went wrong!', error)
             })
     }
@@ -395,6 +400,12 @@ function HomeSearchParam() {
                             <FontAwesomeIcon icon={faDownload} />
                         </span>
                         <Link
+                            href={currentUmbrella.link}
+                            className="cursor-pointer md:text-md text-xs absolute max-sm:top-14 max-sm:left-2 top-28 left-4 z-10 flex max-sm:w-5 max-sm:h-5 w-10 h-10 rounded-full bg-main text-white justify-center items-center"
+                        >
+                            <FontAwesomeIcon icon={faCartShopping} />
+                        </Link>
+                        <Link
                             target="_blank"
                             href={{
                                 pathname: `/detail/${currentUmbrella.sku}`,
@@ -413,7 +424,8 @@ function HomeSearchParam() {
                             className="font-sans absolute max-sm:bottom-8 max-sm:left-2 bottom-10 left-4 z-10 font-bold text-xs text-main"
                             // style={engraveFonts[10].style}
                         >
-                            <FontAwesomeIcon icon={faLink} /> Xem chi tiết ảnh khắc
+                            <FontAwesomeIcon icon={faLink} /> Xem chi tiết ảnh
+                            khắc
                         </Link>
                         <div className="flex items-center w-full overflow-hidden text-center leading-normal">
                             <Link
