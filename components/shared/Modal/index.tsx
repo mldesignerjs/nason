@@ -17,7 +17,7 @@ function Modal({ children }: ModalProps) {
                     <FontAwesomeIcon
                         className=""
                         icon={faPenToSquare}
-                    /> Chỉnh sửa
+                    /> Nội dung khắc
                 </SheetTrigger>
                 <SheetContent className="bg-white flex flex-col gap-6 overflow-y-scroll">
                     <div className="flex items-center justify-center">
