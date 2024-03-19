@@ -289,7 +289,50 @@ export const umbrellas: umbrellaA = [
                 id: '0',
             },
         ],
-        detailPage: null,
+        detailPage: [
+            {
+                imgSrc: '/chagoi-1.jpg',
+                texts: [
+                    {
+                        handle: 'tm',
+                        x: 70,
+                        y: 44.5,
+                        rotateX: 0,
+                        rotateY: 0,
+                        rotateZ: -75,
+                        scale: 1.95,
+                    },
+                ],
+            },
+            {
+                imgSrc: '/chagoi-2.jpg',
+                texts: [
+                    {
+                        handle: 'tm',
+                        x: 66,
+                        y: 67,
+                        rotateX: 58,
+                        rotateY: 19,
+                        rotateZ: -133,
+                        scale: 1.88,
+                    },
+                ],
+            },
+            {
+                imgSrc: '/chagoi-3.jpg',
+                texts: [
+                    {
+                        handle: 'tm',
+                        x: 81.2,
+                        y: 32.5,
+                        rotateX: 0,
+                        rotateY: 0,
+                        rotateZ: -47,
+                        scale: 0.87,
+                    },
+                ],
+            },
+        ],
     },
     {
         id: '2',

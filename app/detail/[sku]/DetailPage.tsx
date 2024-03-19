@@ -31,7 +31,7 @@ export default function DetailPage() {
         <div className="mt-8" ref={imageRef1}>
             <Link
                 href={umbrellaLink}
-                className="cursor-pointer md:text-md text-xs fixed max-sm:top-32 max-sm:right-10 top-32 right-32 z-10 flex px-6 py-4 rounded-full bg-main text-white justify-center items-center"
+                className="cursor-pointer text-xs fixed max-sm:top-32 max-sm:right-10 top-32 right-32 z-10 flex px-4 py-2 rounded-full bg-main text-white justify-center items-center"
             >
                 <FontAwesomeIcon icon={faCartShopping} />{' '}
                 <span className="pl-2">Mua ngay</span>

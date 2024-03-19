@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 import { engraveFonts, umbrellas } from '@/constants'
 import { handleO } from '@/types'
@@ -9,8 +9,10 @@ export interface ITextEngravedProps {
 }
 
 export function TextEngraved(props: ITextEngravedProps) {
+    const path = usePathname()
+    const kindUmbrella = path.split('/')[2]
+
     const searchParam = useSearchParams()
-    const kindUmbrella: string = searchParam.get('type') || 'g30'
 
     const indexFont: string = searchParam.get('font') || '0'
     const indexFontInt: number = parseInt(indexFont)
@@ -33,6 +35,7 @@ export function TextEngraved(props: ITextEngravedProps) {
             return umbrella.sku === kindUmbrella
         })
     }, [kindUmbrella])
+
     return (
         <>
             <span

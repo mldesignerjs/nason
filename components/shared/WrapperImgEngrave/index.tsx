@@ -1,5 +1,5 @@
-const download = require('downloadjs')
 import { toPng } from 'html-to-image'
+const download = require('downloadjs')
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDownload } from '@fortawesome/free-solid-svg-icons'
 import { usePathname, useSearchParams } from 'next/navigation'
@@ -53,7 +53,7 @@ export function WrapperImgEngrave({
             }-${index}`,
         )
         toPng(element)
-            .then(function (dataUrl) {
+            .then(function (dataUrl: any) {
                 download(
                     dataUrl,
                     `${tp}-${slugVn(t1)}-${s1}-${sp1}${
@@ -61,7 +61,7 @@ export function WrapperImgEngrave({
                     }-${index}.png`,
                 )
             })
-            .catch(function (error) {
+            .catch(function (error: any) {
                 console.error('oops, something went wrong!', error)
             })
     }
@@ -70,8 +70,9 @@ export function WrapperImgEngrave({
         <>
             <div className="relative w-full">
                 <Button
+                    size={'sm'}
                     type="button"
-                    className="cursor-pointer absolute top-10 left-10 z-10  bg-main text-white"
+                    className="cursor-pointer absolute top-10 left-10 z-10 max-sm:top-4 max-sm:left-4 bg-main text-white"
                     onClick={() =>
                         handleDownLoadImg(
                             id,
@@ -88,7 +89,8 @@ export function WrapperImgEngrave({
                         )
                     }
                 >
-                    <FontAwesomeIcon icon={faDownload} /> Tải ảnh
+                    <FontAwesomeIcon icon={faDownload} />{' '}
+                    <span className="font-xs font-normal">Tải ảnh</span>
                 </Button>
                 <div
                     className="relative"
