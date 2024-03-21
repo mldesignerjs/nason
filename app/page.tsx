@@ -431,7 +431,6 @@ function HomeSearchParam() {
                         </Link>
                         <div className="flex items-center w-full overflow-hidden text-center leading-normal">
                             <Link
-                                target="_blank"
                                 href={{
                                     pathname: `/detail/${currentUmbrella.sku}`,
                                     query: {
