@@ -4,7 +4,7 @@ import DetailPage from './DetailPage'
 type Props = {
 }
 
-export function generateMetadata({ params }: Props): Metadata {
+export function generateMetadata({  }: Props): Metadata {
     return {
         title: "Khắc tên lên tay cầm",
     }
