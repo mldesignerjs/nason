@@ -7,8 +7,8 @@ import './globals.css'
 
 export const metadata: Metadata = {
     title: {
-        template: '%s | MLD',
-        default: "MLD's Website",
+        template: '%s | Ô dù Nason',
+        default: "Ô dù Nason - Khắc tên lên tay cầm",
     },
     description: "I'm a designer!",
 }

@@ -5,7 +5,7 @@ function Header(props: HeaderProps) {
         <header className="w-full fixed bg-white border-b border-gray-100 z-50">
             <div className="container mx-auto py-4">
                 <div className="flex justify-between items-center">
-                    <h2>Cảm ơn bạn đã lựa chọn chúng tôi.</h2>
+                    <h2>Cảm ơn bạn đã lựa chọn <span className="text-main font-bold">Ô dù Nason</span>.</h2>
                 </div>
             </div>
         </header>

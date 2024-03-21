@@ -23,7 +23,7 @@ function Modal({ children }: ModalProps) {
                     <div className="flex items-center justify-center">
                         <Image
                             src="/logo-black.png"
-                            alt="Logo"
+                            alt="Ô dù Nason"
                             width={150}
                             height={50}
                             className="h-auto"
