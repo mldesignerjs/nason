@@ -408,7 +408,6 @@ function HomeSearchParam() {
                             <FontAwesomeIcon icon={faCartShopping} />
                         </Link>
                         <Link
-                            target="_blank"
                             href={{
                                 pathname: `/detail/${currentUmbrella.sku}`,
                                 query: {
