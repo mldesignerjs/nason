@@ -4,6 +4,7 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Separator } from '@/components/ui/separator'
 import Image from 'next/image'
+import Link from "next/link";
 
 export interface ModalProps {
     children: React.ReactNode
@@ -21,13 +22,15 @@ function Modal({ children }: ModalProps) {
                 </SheetTrigger>
                 <SheetContent className="bg-white flex flex-col gap-6 overflow-y-scroll">
                     <div className="flex items-center justify-center">
+                        <Link href='https://odunason.com' >
                         <Image
                             src="/logo-black.png"
                             alt="Ô dù Nason"
                             width={150}
                             height={50}
                             className="h-auto"
-                        />
+                            />
+                        </Link>
                     </div>
                     <Separator className="border border-gray-50" />
                     {children}
