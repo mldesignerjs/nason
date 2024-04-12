@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input'
 import { useQueryState } from 'nuqs'
 
 export interface IEditContentProps {
+    name: string
     fontSize: string
     letterSpacing: string
     onChangeContent: Function
@@ -11,6 +12,7 @@ export interface IEditContentProps {
 }
 
 export function EditContent({
+    name,
     fontSize,
     letterSpacing,
     onChangeContent,
@@ -25,6 +27,7 @@ export function EditContent({
                     name="contentEngrave"
                     className="w-full py-2 px-2 rounded border bg-gray-100 text-main font-bold ring-offset-main focus-visible:ring-0"
                     placeholder="Nhập nội dung bạn muốn khắc"
+                    value={name}
                     onChange={(e) => onChangeContent(e.target.value)}
                 />
             </div>
