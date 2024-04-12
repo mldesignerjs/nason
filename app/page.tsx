@@ -318,7 +318,7 @@ function HomeSearchParam() {
                             <p className="font-bold text-center">Dòng 1</p>
                         )}
                         <EditContent
-                            name={name}
+                            name={name as string}
                             fontSize={size || sizeP}
                             letterSpacing={spacing || spacingP}
                             onChangeContent={handleChangeContent1}
@@ -331,7 +331,7 @@ function HomeSearchParam() {
                             <div className="border-t-gray-300 py-4 border-t">
                                 <p className="font-bold text-center">Dòng 2</p>
                                 <EditContent
-                                    name={name2}
+                                    name={name2 as string}
                                     fontSize={size2 || sizeP2}
                                     letterSpacing={spacing2 || spacingP2}
                                     onChangeContent={handleChangeContent2}
