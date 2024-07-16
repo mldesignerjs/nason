@@ -283,10 +283,16 @@ export const umbrellas: umbrellaA = [
         link: 'https://odunason.com/cua-hang/du-tu-dong-gap-gon-nason-umbrella-chagoi-can-go-hiem-khac-ten-logo-dat-vang',
         handle: [
             {
+                value: 'cn',
+                urlImg: 'chagoi-den-cn.jpg',
+                urlImgR: '/chagoi-den-cn.jpg',
+                id: '0',
+            },
+            {
                 value: 'tm',
                 urlImg: 'chagoi-den.jpg',
                 urlImgR: '/chagoi-den.jpg',
-                id: '0',
+                id: '1',
             },
         ],
         detailPage: [
